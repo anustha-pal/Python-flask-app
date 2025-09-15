@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:                    
-      ACR_NAME: mycontainerss                
-      AZURE_APP_SERVICE: flask-app-1
+      ACR_NAME: myprojectacrs              
+      AZURE_APP_SERVICE: flask-apps
       RESOURCE_GROUP: flask-resources
     steps:
       - name: Checkout repository
@@ -36,10 +36,10 @@ jobs:
         run: az acr login --name myprojectacrs
 
       - name: Push Docker Image
-        run: docker push myprojectacrs.azurecr.io/dotbackend:latest
+        run: docker push myprojectacrs.azurecr.io/flask-image:latest
 
       - name: Deploy to Azure App Service (Container)
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_APP_SERVICE }}
-          images: myprojectacrs.azurecr.io/dotbackend:latest
+          images: myprojectacrs.azurecr.io/flask-image:latest
